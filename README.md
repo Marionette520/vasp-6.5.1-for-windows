@@ -57,7 +57,7 @@ mpiexec -np <number_of_cores> vasp_ncl
 
 - **VASP Version:** 6.5.1
 - **Platform:** Windows (x64)
-- **Compiler:** Intel oneAPI (Recommended)
+- **Compiler:** Intel oneAPI  mingw64 cygwin
 
 ### 📄 License
 
