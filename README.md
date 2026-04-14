@@ -76,7 +76,7 @@ If you are using the **VTST version**, you can utilize additional scripts like `
 | **Compiler** | Intel (ifx) | GCC (gfortran) | **GCC (gfortran)** |
 | **Dependencies** | High (Intel Runtime) | Low (Standalone) | **Low (Standalone)** |
 | **Performance** |  |  | **** |
-| **VTST Tools** |  No |  No | ** Yes** |
+| **VTST Tools** |  No |  No |  Yes |
 | **Use Case** | Heavy Production | General Use | **Transition States/NEB** |
 
 ---
