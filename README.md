@@ -81,10 +81,4 @@ If you are using the **VTST version**, you can utilize additional scripts like `
 
 ---
 
-###  Troubleshooting
-
-- **"mpiexec not found":**
-    -   **oneAPI users:** You must run the "Intel oneAPI Command Prompt" or run `setvars.sh` before executing VASP.
-    -   **MinGW64 users:** Ensure the `bin` folder is in your PATH.
-- **VTST Scripts:** If `nebmake.pl` is not recognized in the VTST version, ensure the `bin` folder containing the perl scripts is added to your system PATH.
 
