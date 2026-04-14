@@ -1,64 +1,90 @@
-### 🚀 VASP 6.5.1 for Windows
+###  VASP 6.5.1 for Windows (Binaries)
 
-This repository contains the **Windows port** of VASP (Vienna Ab initio Simulation Package) version 6.5.1.
+This repository provides pre-compiled binaries for **VASP 6.5.1** on Windows. We offer three different builds to suit your specific computational needs and system environments.
 
-> **⚠️ Important Note:**
-> VASP is copyrighted software. You must have a valid VASP license to use this software legally. This repository only provides the compilation for Windows users.
-
----
-
-### 🛠️ Installation & Setup
-
-To use these binaries, you need to configure your environment correctly.
-
-#### 1. Prerequisites
-- **Intel oneAPI:** The binaries are compiled using the Intel oneAPI toolkit. It is **highly recommended** to install the [Intel oneAPI Base Toolkit](https://www.intel.com/content/www/us/en/developer/tools/oneapi/base-toolkit.html) to ensure all runtime libraries (MPI, etc.) are available.
-- **License Files:** Ensure you have the necessary `potcar` files and a valid license in your working directory.
-
-#### 2. Add to System PATH
-For convenience, you should add the directory containing the executables to your Windows **PATH** environment variable.
-
-**How to do it:**
-1.  Open the Start menu, search for **"Environment Variables"**, and select **"Edit the system environment variables"**.
-2.  Click the **"Environment Variables..."** button.
-3.  Under **"System variables"**, find the **`Path`** variable and select **Edit**.
-4.  Click **New** and add the full path to the folder where `vasp_std.exe` is located.
-5.  Click **OK** to save.
+> **️ Important Note:**
+> VASP is copyrighted software. You must have a valid VASP license to use these binaries legally. This repository only provides the Windows compilation binaries.
 
 ---
 
-### ⚡ Usage
+###  Versions & Requirements
 
-Once the PATH is configured, you can run VASP from the Command Prompt (`cmd`) or PowerShell using `mpiexec`.
+Please select the version that best fits your workflow:
 
-#### Standard Calculation (vasp_std)
-Used for general purpose calculations (Gamma point and k-points).
-```bash
-mpiexec -np <number_of_cores> vasp_std
-```
+#### 1. Standard - oneAPI Version (Recommended for Performance)
+- **Compiler:** Intel oneAPI (ifx/icc).
+- **Description:** The standard build optimized for Intel architectures.
+- **Requirements:** Requires **Intel oneAPI Base Toolkit** (specifically MPI libraries) to be installed and initialized.
+- **Best For:** Users seeking maximum performance on Intel CPUs and who already have the Intel environment configured.
 
-#### Gamma-point Only (vasp_gam)
-Optimized for calculations using only the Gamma point. Faster and requires less memory.
-```bash
-mpiexec -np <number_of_cores> vasp_gam
-```
+#### 2. Standard - MinGW64 Version (Standalone)
+- **Compiler:** GCC (gfortran) via MinGW64.
+- **Description:** A portable build that does not rely on Intel's heavy runtime libraries.
+- **Requirements:** Minimal dependencies. Usually works out-of-the-box.
+- **Best For:** Users who want a simple setup without installing the Intel oneAPI suite.
 
-#### Non-Collinear Magnetism (vasp_ncl)
-Required for non-collinear magnetic calculations and spin-orbit coupling.
-```bash
-mpiexec -np <number_of_cores> vasp_ncl
-```
-
-> **Tip:** Replace `<number_of_cores>` with the number of CPU cores you wish to utilize (e.g., `-np 32`).
+#### 3. VTST - MinGW64 Version (With Transition State Tools)
+- **Compiler:** GCC (gfortran) via MinGW64.
+- **Description:** Includes the **VTST (Transition State Tools)** scripts and source modifications.
+- **Features:** Supports **NEB** (Nudged Elastic Band), **Dimer** method, and other advanced geometry optimization algorithms provided by the Henkelman group.
+- **Requirements:** Same as the standard MinGW64 version.
+- **Best For:** Users performing reaction path finding, transition state searches, or requiring VTST-specific functionalities.
 
 ---
 
-### 📝 Version Info
+### ️ Installation
 
-- **VASP Version:** 6.5.1
-- **Platform:** Windows (x64)
-- **Compiler:** Intel oneAPI  mingw64 cygwin
+1.  **Download:** Choose your preferred version from the releases and extract the archive.
+2.  **Add to PATH:**
+    To run VASP commands globally, add the extracted folder's `bin` directory to your Windows **Environment Variables**.
+    -   Search for **"Environment Variables"** in the Windows Start menu.
+    -   Under **"System variables"**, edit the **`Path`** variable.
+    -   Add the full path to the folder containing `vasp_std.exe`.
 
-### 📄 License
+---
 
-Please refer to the official [VASP license](https://www.vasp.at) terms.
+###  Usage
+
+Open **Command Prompt** (`cmd`) or **PowerShell** in your working directory.
+
+#### Standard Execution
+```bash
+mpiexec -np <cores> vasp_std
+```
+
+#### Gamma-point Only (Optimized)
+```bash
+mpiexec -np <cores> vasp_gam
+```
+
+#### Non-Collinear / SOC
+```bash
+mpiexec -np <cores> vasp_ncl
+```
+
+> **Note:** Replace `<cores>` with the number of CPU threads (e.g., `-np 16`).
+
+#### VTST Specifics (For VTST Version Users)
+If you are using the **VTST version**, you can utilize additional scripts like `nebmake.pl` for setting up NEB calculations. Ensure the script directory is also in your PATH.
+
+---
+
+###  Version Comparison
+
+| Feature | oneAPI Version | MinGW64 Version | **VTST (MinGW64)** |
+| :--- | :--- | :--- | :--- |
+| **Compiler** | Intel (ifx) | GCC (gfortran) | **GCC (gfortran)** |
+| **Dependencies** | High (Intel Runtime) | Low (Standalone) | **Low (Standalone)** |
+| **Performance** |  |  | **** |
+| **VTST Tools** |  No |  No | ** Yes** |
+| **Use Case** | Heavy Production | General Use | **Transition States/NEB** |
+
+---
+
+###  Troubleshooting
+
+- **"mpiexec not found":**
+    -   **oneAPI users:** You must run the "Intel oneAPI Command Prompt" or run `setvars.sh` before executing VASP.
+    -   **MinGW64 users:** Ensure the `bin` folder is in your PATH.
+- **VTST Scripts:** If `nebmake.pl` is not recognized in the VTST version, ensure the `bin` folder containing the perl scripts is added to your system PATH.
+
